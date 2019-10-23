@@ -72,7 +72,9 @@ async function handleInvoke(params, isReadOnly = false) {
     contractMethod,
     arguments: contractArgs
   } = params;
-  aelf.setProvider(new AElf.providers.HttpProvider(endpoint || END_POINT));
+  if (endpoint) {
+    aelf.setProvider(new AElf.providers.HttpProvider(endpoint));
+  }
   const contract = await aelf.chain.contractAt(contractAddress, wallet);
   if (!contract[contractMethod]) {
     throw new Error(`No such method ${contractMethod}`);
@@ -99,7 +101,9 @@ async function handleApi(params) {
   if (!CHAIN_APIS[apiPath]) {
     throw new Error(`Not support api ${apiPath}`);
   }
-  aelf.setProvider(new AElf.providers.HttpProvider(endpoint || END_POINT));
+  if (endpoint) {
+    aelf.setProvider(new AElf.providers.HttpProvider(endpoint));
+  }
   const result = await aelf.chain[CHAIN_APIS[apiPath]](apiArgs.map(v => v.value));
   return result;
 }
