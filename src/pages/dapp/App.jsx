@@ -11,6 +11,11 @@ const App = () => {
   const [bridge, setBridge] = useState(null);
   const [result, setResult] = useState({});
   useEffect(() => {
+    // use socket.io
+    // const bridgeInstance = new AElfBridge({
+    //   proxyType: 'SOCKET.IO'
+    // });
+    // use postMessage
     const bridgeInstance = new AElfBridge();
     setBridge(bridgeInstance);
   }, []);
