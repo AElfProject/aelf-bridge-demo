@@ -21,14 +21,17 @@ export const serializeMessage = data => {
 };
 
 export const deserializeMessage = str => {
-  const strs = str.split('?');
-  if (str.length > 0 && strs.length === 2 && str.startsWith(MESSAGE_PREFIX)) {
-    let result = queryString.parse(strs[1]).params || '';
-    result = decodeURIComponent(atob(result));
-    try {
-      result = JSON.parse(result);
-    } catch (e) {}
-    return result;
+  if (typeof str === 'string' && str.startsWith(MESSAGE_PREFIX)) {
+    const strs = str.split('?');
+    if (str.length > 0 && strs.length === 2) {
+      let result = queryString.parse(strs[1]).params || '';
+      result = decodeURIComponent(atob(result));
+      try {
+        result = JSON.parse(result);
+      } catch (e) {}
+      return result;
+    }
+    return false;
   }
   return false;
 };
