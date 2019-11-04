@@ -185,7 +185,6 @@ export const handleMessage = async (request, keyPair, dappKeyPair) => {
 
 export const handleConnection = (request, keyPairs) => {
   const {
-    appId,
     random,
     encryptAlgorithm,
     signature,
@@ -207,7 +206,6 @@ export const handleConnection = (request, keyPairs) => {
   }
   return {
     keyPair,
-    appId,
     dappKeyPair,
     encryptAlgorithm
   };

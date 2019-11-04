@@ -13,7 +13,9 @@ const App = () => {
   useEffect(() => {
     // use socket.io
     // const bridgeInstance = new AElfBridge({
-    //   proxyType: 'SOCKET.IO'
+    //   proxyType: 'SOCKET.IO',
+    //   socketUrl: 'http://localhost:35443',
+    //   channelType: 'ENCRYPT'
     // });
     // use postMessage
     const bridgeInstance = new AElfBridge();
