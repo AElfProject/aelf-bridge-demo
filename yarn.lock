@@ -1130,10 +1130,10 @@ add-dom-event-listener@^1.1.0:
   dependencies:
     object-assign "4.x"
 
-aelf-bridge@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/aelf-bridge/-/aelf-bridge-0.0.2.tgz#604e6ae89fe5f2074c68d72fe98074c2833d05de"
-  integrity sha512-z2LBgbPDShhGWgHxDBGLsCQICze53iEYRNvXN/KJlebtsyHK9O0QvRw0M5zwZ8wjJMqjvi2m9vgdeexzGAmCTg==
+aelf-bridge@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/aelf-bridge/-/aelf-bridge-0.0.4.tgz#f98026857c22a22cad0f36fab287ecc5f9610194"
+  integrity sha512-ru2XgCfxoLqjvNSQ4VXT+Od9v6TIft0+LY/1J0cs89yv8YCzGCuiLFy0rfjjFp1T0plkNThvCVTqSbMExwb5ng==
   dependencies:
     "@babel/runtime" "^7.6.3"
     browserify-cipher "^1.0.1"
