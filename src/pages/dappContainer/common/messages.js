@@ -16,7 +16,8 @@ import {
   randomId,
   serializeMessage,
   sign,
-  verify
+  verify,
+  checkTimestamp
 } from './utils';
 
 export const responseFormat = (id, result, errors) => {
@@ -109,9 +110,11 @@ async function handleApi(params) {
 }
 
 function handleRequestVerify(action, params, dappKeyPair) {
-  const { signature } = params;
+  const {
+    signature
+  } = params;
   if (action === 'connect') {
-    return verify(params.random, signature, dappKeyPair);
+    return verify(Buffer.from(String(params.timestamp)), signature, dappKeyPair);
   }
   return verify(Buffer.from(params.originalParams, 'base64'), signature, dappKeyPair);
 }
@@ -119,7 +122,7 @@ function handleRequestVerify(action, params, dappKeyPair) {
 function deserializeRequestParams(action, params) {
   if (action === 'connect') {
     return {
-      random: params.random,
+      timestamp: params.timestamp,
       publicKey: params.publicKey
     };
   }
@@ -128,6 +131,9 @@ function deserializeRequestParams(action, params) {
     result = JSON.parse(result);
   } catch (e) {
     result = {};
+  }
+  if (!checkTimestamp(result.timestamp)) {
+    throw new Error('Timestamp is not valid');
   }
   return {
     ...result
@@ -185,11 +191,14 @@ export const handleMessage = async (request, keyPair, dappKeyPair) => {
 
 export const handleConnection = (request, keyPairs) => {
   const {
-    random,
+    timestamp,
     encryptAlgorithm,
     signature,
     publicKey
   } = request.params;
+  if (!checkTimestamp(timestamp)) {
+    throw new Error('Timestamp is not valid');
+  }
   if (!SUPPORTED_EC.includes(encryptAlgorithm)) {
     throw new Error(`Not support ${encryptAlgorithm}`);
   }
@@ -201,7 +210,7 @@ export const handleConnection = (request, keyPairs) => {
   } else {
     keyPair = ec.genKeyPair();
   }
-  if (!verify(random, signature, dappKeyPair)) {
+  if (!verify(Buffer.from(String(timestamp)), signature, dappKeyPair)) {
     throw new Error('Received an invalid signature');
   }
   return {

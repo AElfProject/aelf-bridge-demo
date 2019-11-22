@@ -11,8 +11,12 @@ export const aelf = new AElf(new AElf.providers.HttpProvider(END_POINT));
 export const wallet = AElf.wallet.getWalletByPrivateKey('fce01061b3c407108d271c8bf95c46b95c409997ff661a73664489519e458b46');
 
 export const ACCOUNT_INFO = {
-  accountName: 'test',
-  address: 'XxajQQtYxnsgQp92oiSeENao9XkmqbEitDD8CJKfDctvAQmH6',
+  accounts: [
+    {
+      name: 'test',
+      address: 'XxajQQtYxnsgQp92oiSeENao9XkmqbEitDD8CJKfDctvAQmH6'
+    }
+  ],
   chains: [
     {
       url: END_POINT,
