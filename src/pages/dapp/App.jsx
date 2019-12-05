@@ -4,6 +4,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Button } from 'antd-mobile';
+import AElf from 'aelf-sdk';
 import AElfBridge from 'aelf-bridge';
 import './index.less';
 
@@ -43,9 +44,23 @@ const App = () => {
     }).then(setResult).catch(setResult);
   }
 
-  function getNativeTokenInfo() {
+  async function getNativeTokenInfo() {
+    const { data: { GenesisContractAddress } } = await bridge.api({
+      apiPath: '/api/blockChain/chainStatus', // api path
+      arguments: []
+    });
+    const { data: tokenAddress } = await bridge.invokeRead({
+      contractAddress: GenesisContractAddress,
+      contractMethod: 'GetContractAddressByName',
+      arguments: [
+        {
+          name: 'name',
+          value: AElf.utils.sha256('AElf.ContractNames.Token')
+        }
+      ]
+    });
     bridge.invokeRead({
-      contractAddress: 'mS8xMLs9SuWdNECkrfQPF8SuRXRuQzitpjzghi3en39C3SRvf', // 合约地址
+      contractAddress: tokenAddress, // 合约地址
       contractMethod: 'GetNativeTokenInfo', // 合约方法名
       arguments: []
     }).then(setResult).catch(setResult);
