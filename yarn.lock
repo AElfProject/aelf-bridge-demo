@@ -1130,21 +1130,22 @@ add-dom-event-listener@^1.1.0:
   dependencies:
     object-assign "4.x"
 
-aelf-bridge@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/aelf-bridge/-/aelf-bridge-0.0.5.tgz#dbabf12cccfe7d38833d02e3e4ee87682c55cf3f"
-  integrity sha512-U1OW5k4CbnAJBk5NZPApR9aWl2ouP0RJLB2SsSDyUvMELCwadIcl+v7UaOpd+1gZ/FoZ5+jhFb8GhTfpFxzyyw==
+aelf-bridge@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/aelf-bridge/-/aelf-bridge-0.0.7.tgz#ad33ff1f49d87e736aa91f05728d18e884270aaf"
+  integrity sha512-UyBXhCo57h6x1JFaO5XXrhMfqIyJEUcgA7vBcnCGEAW9tnVoXeAciqK4hpaNeWL3Dor17myag6QqB7gad9MDmg==
   dependencies:
     "@babel/runtime" "^7.6.3"
     browserify-cipher "^1.0.1"
+    create-hmac "^1.1.7"
     elliptic "^6.5.1"
     socket.io-client "^2.3.0"
     uuid "^3.3.3"
 
-aelf-sdk@^3.2.21:
-  version "3.2.21"
-  resolved "https://registry.yarnpkg.com/aelf-sdk/-/aelf-sdk-3.2.21.tgz#3c8a5dddad1a815650dd1ff47bce526ca49c2e1b"
-  integrity sha512-fBbslTE2NgAIKF1OHkhlouoGmXq3kXwGnRVFC7H3mATOsfgEJOZqAz6NSNFyqy4YscfTIsxuDQ7DrAXtPF398Q==
+aelf-sdk@^3.2.23:
+  version "3.2.23"
+  resolved "https://registry.yarnpkg.com/aelf-sdk/-/aelf-sdk-3.2.23.tgz#f4d02fb3ed8b87b91906949440548a8ce4ca1fb6"
+  integrity sha512-DKrmBtxixrmkb2+omd8xeupeciAm4fLvgrtwbUtPzwV89892nOVeR0Gby9FFDNOHSICQCAZViG3AEN+AVe/uKg==
   dependencies:
     "@aelfqueen/protobufjs" "^6.8.9"
     "@babel/runtime" "^7.4.5"
@@ -2488,7 +2489,7 @@ create-hash@^1.1.0, create-hash@^1.1.1, create-hash@^1.1.2, create-hash@^1.2.0:
     ripemd160 "^2.0.1"
     sha.js "^2.4.0"
 
-create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
+create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4, create-hmac@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/create-hmac/-/create-hmac-1.1.7.tgz#69170c78b3ab957147b2b8b04572e47ead2243ff"
   integrity sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==
