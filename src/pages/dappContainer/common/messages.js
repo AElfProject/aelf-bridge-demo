@@ -105,7 +105,7 @@ async function handleApi(params) {
   if (endpoint) {
     aelf.setProvider(new AElf.providers.HttpProvider(endpoint));
   }
-  const result = await aelf.chain[CHAIN_APIS[apiPath]](apiArgs.map(v => v.value));
+  const result = await aelf.chain[CHAIN_APIS[apiPath]](...apiArgs.map(v => v.value));
   return result;
 }
 
