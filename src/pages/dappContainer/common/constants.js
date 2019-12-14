@@ -14,7 +14,9 @@ export const ACCOUNT_INFO = {
   accounts: [
     {
       name: 'test',
-      address: 'XxajQQtYxnsgQp92oiSeENao9XkmqbEitDD8CJKfDctvAQmH6'
+      address: 'XxajQQtYxnsgQp92oiSeENao9XkmqbEitDD8CJKfDctvAQmH6',
+      // eslint-disable-next-line max-len
+      publicKey: '04821c66aa026e3e883eaa964733ebe20a9e7d34b1f6b2ac78dab0700d74caf8127bd7041498abe6e58c6531a2f1c3694bfc8ee8c039c05b697160572b13fbb17b'
     }
   ],
   chains: [
