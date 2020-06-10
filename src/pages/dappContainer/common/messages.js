@@ -25,7 +25,7 @@ export const responseFormat = (id, result, errors) => {
     return {
       id,
       result: {
-        errors: Array.isArray(errors) ? errors : [errors],
+        error: Array.isArray(errors) ? errors : [errors],
         code: errors.code || 500,
         msg: errors.message || 'err happened',
         data: result
@@ -37,7 +37,7 @@ export const responseFormat = (id, result, errors) => {
     result: {
       code: 0,
       msg: 'success',
-      errors: [],
+      error: [],
       data: result
     }
   };

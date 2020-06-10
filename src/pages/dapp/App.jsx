@@ -39,6 +39,23 @@ const App = () => {
 
   function getChainHeight() {
     bridge.api({
+      apiPath: '/api/blockChain/blockByHeight', // api路径
+      arguments: [
+        {
+          name: 'height',
+          value: 2
+        },
+        {
+          name: 'includeTransaction',
+          value: false
+        }
+      ]
+    }).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.error(err);
+    });
+    bridge.api({
       apiPath: '/api/blockChain/blockHeight', // api路径
       arguments: []
     }).then(setResult).catch(setResult);
@@ -67,7 +84,9 @@ const App = () => {
   }
 
   function getAccountInfo() {
-    bridge.account().then(setResult).catch(setResult);
+    bridge.account().then(setResult).catch(err => {
+      console.error(err);
+    });
   }
 
   function disconnect() {
