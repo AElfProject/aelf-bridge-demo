@@ -6,12 +6,15 @@
 /* eslint-env node */
 
 const path = require('path');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {ROOT, OUTPUT_PATH, isProdMode, ENTRIES, PAGES} = require('./util');
 const theme = require(path.resolve(ROOT, './package.json')).theme;
+
+dotenv.config();
 
 const copies = [];
 
@@ -95,7 +98,8 @@ const baseConfig = {
     new CopyWebpackPlugin(copies),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.LOCALE': JSON.stringify(process.env.LOCALE || 'zh')
+      'process.env.LOCALE': JSON.stringify(process.env.LOCALE || 'zh'),
+      'process.env.END_POINT': JSON.stringify(process.env.END_POINT)
     })
   ]
 };

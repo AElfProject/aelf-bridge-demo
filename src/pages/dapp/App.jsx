@@ -9,27 +9,34 @@ import AElfBridge from 'aelf-bridge';
 import './index.less';
 
 const App = () => {
-  const [bridge, setBridge] = useState(null);
+  const [aelf, setAelf] = useState(null);
   const [result, setResult] = useState({});
+  const [contract, setContract] = useState(null);
   useEffect(() => {
     // use socket.io
-    // const bridgeInstance = new AElfBridge({
-    //   proxyType: 'SOCKET.IO',
-    //   socketUrl: 'http://localhost:35443'
-    // });
+    const bridgeInstance = new AElfBridge({
+      proxyType: 'SOCKET.IO',
+      socketUrl: 'http://localhost:35443'
+    });
     // use postMessage
-    const bridgeInstance = new AElfBridge();
-    setBridge(bridgeInstance);
+    // const bridgeInstance = new AElfBridge();
+    setAelf(bridgeInstance);
   }, []);
   function connect() {
-    bridge.connect().then(setResult).catch(setResult);
+    aelf.connect().then(setResult).catch(setResult);
   }
 
   function getChainStatus() {
-    bridge.api({
-      apiPath: '/api/blockChain/chainStatus', // api路径
-      arguments: []
-    }).then(res => {
+    // aelf.api({
+    //   apiPath: '/api/blockChain/chainStatus', // api路径
+    //   arguments: []
+    // }).then(res => {
+    //   setResult(res);
+    // }).catch(err => {
+    //   console.log(err);
+    //   setResult(err);
+    // });
+    aelf.chain.getChainStatus().then(res => {
       setResult(res);
     }).catch(err => {
       console.log(err);
@@ -38,61 +45,51 @@ const App = () => {
   }
 
   function getChainHeight() {
-    bridge.api({
-      apiPath: '/api/blockChain/blockByHeight', // api路径
-      arguments: [
-        {
-          name: 'height',
-          value: 2
-        },
-        {
-          name: 'includeTransaction',
-          value: false
-        }
-      ]
-    }).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.error(err);
+    aelf.chain.getBlockHeight().then(height => {
+      aelf.chain.getBlockByHeight(height, true).then(res => {
+        setResult(res);
+      }).catch(err => {
+        console.error(err);
+      });
     });
-    bridge.api({
-      apiPath: '/api/blockChain/blockHeight', // api路径
-      arguments: []
-    }).then(setResult).catch(setResult);
   }
 
   async function getNativeTokenInfo() {
-    const { data: { GenesisContractAddress } } = await bridge.api({
-      apiPath: '/api/blockChain/chainStatus', // api path
-      arguments: []
-    });
-    const { data: tokenAddress } = await bridge.invokeRead({
-      contractAddress: GenesisContractAddress,
-      contractMethod: 'GetContractAddressByName',
-      arguments: [
-        {
-          name: 'name',
-          value: AElf.utils.sha256('AElf.ContractNames.Token')
-        }
-      ]
-    });
-    bridge.invokeRead({
-      contractAddress: tokenAddress, // 合约地址
-      contractMethod: 'GetNativeTokenInfo', // 合约方法名
-      arguments: []
-    }).then(setResult).catch(setResult);
+    const chainStatus = await aelf.chain.getChainStatus();
+    const { GenesisContractAddress } = chainStatus;
+    const zero = await aelf.chain.contractAt(GenesisContractAddress);
+    console.log(zero);
+    const tokenAddress = await zero.GetContractAddressByName.call(AElf.utils.sha256('AElf.ContractNames.Token'));
+    console.log(tokenAddress);
+    const token = await aelf.chain.contractAt(tokenAddress);
+    console.log(token);
+    setResult(await token.GetTokenInfo.call({
+      symbol: 'ELF'
+    }));
   }
 
   function getAccountInfo() {
-    bridge.account().then(setResult).catch(err => {
+    aelf.account().then(setResult).catch(err => {
       console.error(err);
     });
   }
 
-  function disconnect() {
-    bridge.disconnect().then(setResult).catch(setResult);
+  async function getContract() {
+    const c = await aelf.chain.contractAt('JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE');
+    setContract(c);
   }
 
+  function disconnect() {
+    aelf.disconnect().then(setResult).catch(setResult);
+  }
+
+  async function callMethod() {
+    const res = await contract.GetBalance.call({
+      owner: 'JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE',
+      symbol: 'ELF'
+    });
+    setResult(res);
+  }
   return (
     <div className="dapp">
       <Button onClick={() => connect()}>connect</Button>
@@ -100,11 +97,13 @@ const App = () => {
       <Button onClick={() => getChainStatus()}>get chain status</Button>
       <Button onClick={() => getChainHeight()}>get chain height</Button>
       <Button onClick={() => getNativeTokenInfo()}>get native token info</Button>
+      <Button onClick={() => getContract()}>get token contract</Button>
+      {contract ? <Button onClick={callMethod}>Get Balance</Button> : null}
       <Button onClick={() => disconnect()}>disconnect</Button>
-      <div>
-        Result:
+      Result:
+      <pre>
         {JSON.stringify(result, null, 2)}
-      </div>
+      </pre>
     </div>
   );
 };
