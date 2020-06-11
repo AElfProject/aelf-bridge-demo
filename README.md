@@ -15,20 +15,62 @@ yarn
 
 ## Development
 
-```bash
-npm run dev
-```
+### Debugging Dapp with `aelf-command`
 
-This will open a server listen on port 9527, open the page `http://0.0.0.0:9527/container.html`. When you inspect this page, you can find an iframe inside the HTML,
-the iframe holds the `dapp` page.
+Since there are two ways Dapp can communicate with the AElf chain, `aelf-command` provides the `socket` way.
 
-There are two pages in this repo, as you can see in the directory `src/pages/`, there are `dapp` and `dappContainer`.
+1. start Dapp server in `aelf-command`
 
-Since Dapp need to interact with Native apps which holds wallet info, we provide `dappContainer` to support your development.
-Think `dappContainer` is a wallet App, which hold the wallet info and can interact with `AElf` chain node directly.
-And it provides the abilities to support Dapp communication. Any Developers can use this page as the Native app to develop Dapp.
+    You need to install `aelf-command` before next step.
+    ```bash
+    npm i aelf-command -g
+    ```
+    start the Dapp server
+    ```bash
+    aelf-command dapp-server
+    ```
+    by default, the Dapp server will listen on port `35443`
 
-`dappContainer` use iframe and rewrite iframe's `postMessage`, so `dapp` can send message to `dappContainer`
+2. start webpack
 
-`dapp` is a simple Dapp demo which uses `aelf-bridge` to interact with `dappContainer`, you can use this page to write your own code.
+    In project directory
+    ```bash
+    npm run dev
+    ```
+   open the page `http://0.0.0.0:9527/dapp.html`.
+
+### Debugging Dapp with iframe
+
+1. add chain node url in `.env`
+    ```bash
+    touch .env
+    ```
+    add your own `END_POINT`
+    ```dotenv
+    END_POINT=http://127.0.0.1:8000
+    ```
+
+2. start webpack
+
+    Firstly, init `aelf-bridge` with post message channel
+        ```javascript
+        const bridgeInstance = new AElfBridge();
+        ```
+    In project directory
+    ```bash
+    npm run dev
+    ```
+    open the page `http://0.0.0.0:9527/container.html`. When you inspect this page, you can find an iframe inside the HTML,
+    the iframe holds the `dapp` page.
+
+    There are two pages in this repo, as you can see in the directory `src/pages/`, there are `dapp` and `dappContainer`.
+
+    Since Dapp needs to interact with Native apps which holds wallet info, we provide `dappContainer` to support your development.
+    Think `dappContainer` is a wallet App, which hold the wallet info and can interact with `AElf` chain node directly.
+    And it provides the abilities to support Dapp communication. Any Developers can use this page as the Native app to develop Dapp.
+
+    `dappContainer` uses iframe and rewrite iframe's `postMessage`, so `dapp` can send messages to `dappContainer`
+
+    `dapp` is a simple Dapp demo which uses `aelf-bridge` to interact with `dappContainer`, you can take it as an example and write your own code.
+
 

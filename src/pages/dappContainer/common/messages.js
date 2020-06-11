@@ -97,7 +97,8 @@ async function handleApi(params) {
   const {
     endpoint = END_POINT,
     apiPath,
-    arguments: apiArgs
+    arguments: apiArgs,
+    methodName
   } = params;
   if (!CHAIN_APIS[apiPath]) {
     throw new Error(`Not support api ${apiPath}`);
@@ -105,9 +106,23 @@ async function handleApi(params) {
   if (endpoint) {
     aelf.setProvider(new AElf.providers.HttpProvider(endpoint));
   }
-  const result = await aelf.chain[CHAIN_APIS[apiPath]](...apiArgs.map(v => v.value));
+  const result = await aelf.chain[methodName](...apiArgs.map(v => v.value));
   return result;
 }
+
+async function handleContractMethods(params) {
+  const {
+    endpoint = END_POINT,
+    address
+  } = params;
+  if (endpoint) {
+    aelf.setProvider(new AElf.providers.HttpProvider(endpoint));
+  }
+  const contract = await aelf.chain.contractAt(address, wallet);
+  return Object.keys(contract)
+    .filter(v => /^[A-Z]/.test(v)).sort();
+}
+
 
 function handleRequestVerify(action, params, dappKeyPair) {
   const {
@@ -165,6 +180,12 @@ export const handleMessage = async (request, keyPair, dappKeyPair) => {
         result = responseFormat(
           id,
           await handleInvoke(realParams, action === 'invokeRead')
+        );
+        break;
+      case 'getContractMethods':
+        result = await responseFormat(
+          id,
+          await handleContractMethods(realParams)
         );
         break;
       case 'account':

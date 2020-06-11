@@ -1142,10 +1142,10 @@ aelf-bridge@^0.0.9:
     socket.io-client "^2.3.0"
     uuid "^3.3.3"
 
-aelf-sdk@^3.2.23:
-  version "3.2.23"
-  resolved "https://registry.yarnpkg.com/aelf-sdk/-/aelf-sdk-3.2.23.tgz#f4d02fb3ed8b87b91906949440548a8ce4ca1fb6"
-  integrity sha512-DKrmBtxixrmkb2+omd8xeupeciAm4fLvgrtwbUtPzwV89892nOVeR0Gby9FFDNOHSICQCAZViG3AEN+AVe/uKg==
+aelf-sdk@^3.2.34:
+  version "3.2.34"
+  resolved "https://registry.yarnpkg.com/aelf-sdk/-/aelf-sdk-3.2.34.tgz#842c9d58ff6d5e5663654af5d0331d93683d8c16"
+  integrity sha512-4PhuPw9kZHZvlQFiGVEZjrLLnb4ImxidZTBv/bgyogeWCZNpRvs2jXv/hhrIE0jx/BMHmGQuW7enIBK7P533zg==
   dependencies:
     "@aelfqueen/protobufjs" "^6.8.9"
     "@babel/runtime" "^7.4.5"

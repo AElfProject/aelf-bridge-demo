@@ -4,7 +4,8 @@
  */
 import AElf from 'aelf-sdk';
 
-export const END_POINT = 'http://13.231.179.27:8000';
+// eslint-disable-next-line
+export const END_POINT = process.env.END_POINT;
 export const aelf = new AElf(new AElf.providers.HttpProvider(END_POINT));
 // PRIVATE KEY FOR DEMO!!!
 // eslint-disable-next-line max-len
