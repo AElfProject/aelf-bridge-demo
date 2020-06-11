@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "aelf-bridge": "^0.0.7",
+    "aelf-bridge": "^0.0.9",
     "aelf-sdk": "^3.2.23",
     "antd-mobile": "^2.2.14",
     "axios": "^0.19.0",
