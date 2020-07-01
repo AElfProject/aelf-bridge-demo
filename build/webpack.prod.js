@@ -8,8 +8,7 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-// const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {OUTPUT_PATH} = require('./util');
@@ -38,15 +37,11 @@ const prodConfig = {
     occurrenceOrder: true,
     sideEffects: true,
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
-        uglifyOptions: {
-          compress: {
-            drop_debugger: true,
-            drop_console: true
-          }
-        }
+        sourceMap: false,
+        terserOptions: {}
       }),
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: {
