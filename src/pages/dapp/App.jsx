@@ -14,12 +14,12 @@ const App = () => {
   const [contract, setContract] = useState(null);
   useEffect(() => {
     // use socket.io
-    const bridgeInstance = new AElfBridge({
-      proxyType: 'SOCKET.IO',
-      socketUrl: 'http://localhost:35443'
-    });
+    // const bridgeInstance = new AElfBridge({
+    //   proxyType: 'SOCKET.IO',
+    //   socketUrl: 'http://localhost:35443'
+    // });
     // use postMessage
-    // const bridgeInstance = new AElfBridge();
+    const bridgeInstance = new AElfBridge();
     setAelf(bridgeInstance);
   }, []);
   function connect() {
