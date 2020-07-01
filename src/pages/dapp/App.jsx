@@ -63,6 +63,7 @@ const App = () => {
     console.log(tokenAddress);
     const token = await aelf.chain.contractAt(tokenAddress);
     console.log(token);
+    setContract(token);
     setResult(await token.GetTokenInfo.call({
       symbol: 'ELF'
     }));
@@ -75,8 +76,14 @@ const App = () => {
   }
 
   async function getContract() {
-    const c = await aelf.chain.contractAt('JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE');
-    setContract(c);
+    if (!contract) {
+      const chainStatus = await aelf.chain.getChainStatus();
+      const { GenesisContractAddress } = chainStatus;
+      const zero = await aelf.chain.contractAt(GenesisContractAddress);
+      const tokenAddress = await zero.GetContractAddressByName.call(AElf.utils.sha256('AElf.ContractNames.Token'));
+      const token = await aelf.chain.contractAt(tokenAddress);
+      setContract(token);
+    }
   }
 
   function disconnect() {
