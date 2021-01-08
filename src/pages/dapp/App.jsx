@@ -92,8 +92,18 @@ const App = () => {
 
   async function callMethod() {
     const res = await contract.GetBalance.call({
-      owner: 'JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE',
+      owner: '2RCLmZQ2291xDwSbDEJR6nLhFJcMkyfrVTq1i1YxWC4SdY49a6',
       symbol: 'ELF'
+    });
+    setResult(res);
+  }
+
+  async function sendMethod() {
+    const res = await contract.Transfer({
+      symbol: 'ELF',
+      amount: 1 * (10 ** 8),
+      memo: 'yeah',
+      to: '2RCLmZQ2291xDwSbDEJR6nLhFJcMkyfrVTq1i1YxWC4SdY49a6'
     });
     setResult(res);
   }
@@ -106,6 +116,7 @@ const App = () => {
       <Button onClick={() => getNativeTokenInfo()}>get native token info</Button>
       <Button onClick={() => getContract()}>get token contract</Button>
       {contract ? <Button onClick={callMethod}>Get Balance</Button> : null}
+      {contract ? <Button onClick={sendMethod}>Transfer 1 ELF</Button> : null}
       <Button onClick={() => disconnect()}>disconnect</Button>
       Result:
       <pre>
