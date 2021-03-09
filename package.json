@@ -30,7 +30,7 @@
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "cookie": "^0.4.0",
-    "elliptic": "^6.5.1",
+    "elliptic": "^6.5.4",
     "lodash": "^4.17.15",
     "lodash-decorators": "^6.0.1",
     "memoize-one": "^5.0.5",
